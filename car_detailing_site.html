@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Car Detailing Services</title>
+    <!-- Add this favicon link for the hero icon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23667eea'/%3E%3Cpath d='M16 44l8-16h16l8 16' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='24' cy='44' r='3' fill='white'/%3E%3Ccircle cx='40' cy='44' r='3' fill='white'/%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: start; /* Ensures all package cards align at the top */
+        }
+
+        .package-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .package-card.featured {
+            border: 2px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .package-card.featured::before {
+            height: 6px;
+            background: linear-gradient(90deg, #ff6b6b, #667eea, #764ba2);
+        }
+
+        .package-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .package-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .package-duration {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .pricing-table {
+            margin: 1.5rem 0;
+        }
+
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pricing-row:last-child {
+            border-bottom: none;
+        }
+
+        .vehicle-type {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .services-list {
+            margin-top: 1.5rem;
+        }
+
+        .services-title {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .service-item::before {
+            content: '✓';
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-top: 0.1rem;
+        }
+
+        .comparison-table {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            overflow-x: auto;
+        }
+
+        .comparison-table h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            font-size: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .service-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .service-section {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .tinting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tinting-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tinting-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .tinting-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .tinting-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .tinting-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .film-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .film-option {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .film-option:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+        }
+
+        .film-type {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .film-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .premium-film {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .premium-film:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+        }
+
+        .featured-badge {
+            background: linear-gradient(135deg, #ff6b6b, #667eea);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-weight: 600;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header > div[style*="display: flex"] {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+
+            .service-nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                min-width: 180px;
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+
+            .packages-grid,
+            .tinting-grid,
+            .packages-grid#wrap-container {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+
+            .package-card,
+            .tinting-card {
+                padding: 1rem;
+            }
+
+            .package-card.featured {
+                transform: none;
+            }
+
+            .pricing-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .comparison-table {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+                min-width: 0;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .featured-badge {
+                font-size: 0.7rem;
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.2rem 0.5rem;
+            }
+        }
+
+        /* Optional: Make logo and hero icon scale down on small screens */
+        @media (max-width: 480px) {
+            .header img,
+            .header svg {
+                height: 40px !important;
+                width: 40px !important;
+                padding: 3px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <textarea id="detailing-data" style="display: none;">
+Package,Type,Duration,Sedan,Crossover,Full_Size_SUV_Truck_Van
+Interior Basic,Essential interior cleaning,3.5 Hours,Starting at $165,Starting at $175,Starting at $185
+Interior Premium,Comprehensive interior detailing,6 Hours,Starting at $210,Starting at $220,Starting at $230
+Platinum Package,Complete exterior and interior cleaning,6.5 Hours,Starting at $300,Starting at $310,Starting at $320
+    </textarea>
+
+    <textarea id="tinting-data" style="display: none;">
+Service,Standard_Carbon_Film,Ceramic_Nano_Ceramic_Film
+Full Vehicle Sedan,Starting at $240,Starting at $380
+Full Vehicle Convertible,Starting at $260,Starting at $440
+Full Vehicle Truck/Full Size SUV/Van,Starting at $280,Starting at $550
+Front Two Windows,Starting at $120,Starting at $175
+Windshield Strip,Starting at $80,Starting at $110
+    </textarea>
+
+    <textarea id="wrap-data" style="display: none;">
+Service,Type,Price_Range
+Full Vehicle Wrap,Complete color change or custom design,Starting at $1400
+Partial Wrap,Hood/roof/accent areas,Starting at $800
+Racing Stripes,Custom striping packages,Starting at $400
+Chrome Delete,Blackout trim and accents,Starting at $300
+    </textarea>
+
+    <div class="container">
+        <div class="header">
+            <!-- Logo and hero icon row -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
+                <!-- Logo SVG -->
+                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f697.svg" alt="Car Logo" style="height: 56px; width: 56px; background: white; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 6px;">
+                <!-- Hero Icon SVG -->
+                <svg width="56" height="56" viewBox="0 0 64 64" fill="none" style="background: white; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 6px;">
+                  <circle cx="32" cy="32" r="30" fill="#667eea"/>
+                  <path d="M16 44l8-16h16l8 16" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="24" cy="44" r="3" fill="#fff"/>
+                  <circle cx="40" cy="44" r="3" fill="#fff"/>
+                </svg>
+            </div>
+            <h1>Wrap Boss Auto Spa</h1>
+            <p>Professional detailing and window tinting that makes your vehicle shine</p>
+            <!-- Contact Details -->
+            <div style="margin-top: 1.5rem; color: #fff; font-size: 1.1rem; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;">
+                <span><strong>Call:</strong> <a href="tel:+1234567890" style="color:#fff; text-decoration:underline;">(226) 224-0479</a></span>
+                <span><strong>Email:</strong> <a href="mailto:info@premiumautoservices.com" style="color:#fff; text-decoration:underline;">info@premiumautoservices.com</a></span>
+                <span><strong>Location:</strong> 1982 Dundas St Unit 3, London, ON N5V 1P5</span>
+            </div>
+            <!-- Add this "Book Appointment" button below your contact details in the header -->
+            <div style="margin-top: 1rem;">
+                <a 
+                    href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Car+Detailing+Appointment+at+Wrap+Boss+Auto+Spa&location=1982+Dundas+St+Unit+3,+London,+ON+N5V+1P5&details=Book+your+detailing,+tinting,+or+wrap+service+with+us!+Call+%28226%29+224-0479+for+questions."
+                    target="_blank"
+                    style="display:inline-block;background:#667eea;color:#fff;padding:0.75rem 2rem;border-radius:25px;font-weight:600;text-decoration:none;box-shadow:0 2px 8px rgba(102,126,234,0.15);transition:background 0.2s;"
+                >
+                    Book Appointment
+                </a>
+            </div>
+        </div>
+
+        <div class="service-nav">
+            <button class="nav-btn active" onclick="showService('detailing')">Car Detailing</button>
+            <button class="nav-btn" onclick="showService('tinting')">Window Tinting</button>
+            <button class="nav-btn" onclick="showService('wrap')">Auto Wrap</button>
+        </div>
+
+        <div id="detailing-section" class="service-section">
+            <div class="section-header">
+                <h2>Car Detailing Packages</h2>
+                <p>Professional automotive care for interior and exterior</p>
+            </div>
+            <div class="packages-grid" id="packages-container">
+                </div>
+            <div class="comparison-table">
+                <h2>Detailing Service Comparison</h2>
+                <table id="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Package</th>
+                            <th>Duration</th>
+                            <th>Sedan</th>
+                            <th>Crossover</th>
+                            <th>Full Size SUV/Truck/Van</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tinting-section" class="service-section" style="display: none;">
+            <div class="section-header">
+                <h2>Window Tinting Services</h2>
+                <p>Professional window tinting with premium films</p>
+            </div>
+            <div class="tinting-grid" id="tinting-container">
+                </div>
+        </div>
+
+        <div id="wrap-section" class="service-section" style="display: none;">
+            <div class="section-header">
+                <h2>Auto Wrap Services</h2>
+                <p>Transform your vehicle with premium vinyl wraps and custom designs</p>
+            </div>
+            <div class="packages-grid" id="wrap-container">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // Parse detailing pricing data
+        function parseDetailingData() {
+            const dataText = document.getElementById('detailing-data').value.trim();
+            const lines = dataText.split('\n');
+            const headers = lines[0].split(',');
+            const packages = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const packageData = {};
+                headers.forEach((header, index) => {
+                    packageData[header] = values[index];
+                });
+                packages.push(packageData);
+            }
+            
+            return packages;
+        }
+
+        // Parse tinting pricing data
+        function parseTintingData() {
+            const dataText = document.getElementById('tinting-data').value.trim();
+            const lines = dataText.split('\n');
+            const headers = lines[0].split(',');
+            const services = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const serviceData = {};
+                headers.forEach((header, index) => {
+                    serviceData[header] = values[index];
+                });
+                services.push(serviceData);
+            }
+            
+            return services;
+        }
+
+        // Parse auto wrap pricing data
+        function parseWrapData() {
+            const dataText = document.getElementById('wrap-data').value.trim();
+            const lines = dataText.split('\n');
+            const headers = lines[0].split(',');
+            const services = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const serviceData = {};
+                headers.forEach((header, index) => {
+                    serviceData[header] = values[index];
+                });
+                services.push(serviceData);
+            }
+            
+            return services;
+        }
+
+        // Service descriptions for each package
+        const serviceDescriptions = {
+            'Interior Basic': [
+                'Basic Wash',
+                'Complete interior floor, mats and trunk/cargo vacuum',
+                'Leather/upholstery seats wipe down and vacuum (not including stain removal)',
+                'Clean all plastics and vinyl, console and cup holders',
+                'Interior windows clean'
+            ],
+            'Interior Premium': [
+                'Basic Wash',
+                'Complete interior floor, mats and trunk/cargo vacuum',
+                'Leather/upholstery seats wipe down and vacuum (including stain removal)',
+                'Leather seats reconditioning with premium leather care',
+                'Salt stain removal on carpets and floor mats',
+                'Clean all plastics and vinyl, console and cup holders',
+                'Interior & exterior windows cleaning',
+                'Interior dash, console, and vinyl shiner applied',
+                'Wash and wipe door jambs'
+            ],
+            'Platinum Package': {
+                'Exterior Services': [
+                    'Full exterior wax shampoo wash',
+                    'Hand dried with lint-free microfiber cloth',
+                    'Wheels/tires/wheel wells washed and wiped',
+                    'Tire dressing applied',
+                    'Exterior & interior windows cleaning',
+                    'Wash, wipe, and shine door jambs'
+                ],
+                'Interior Services': [
+                    'Complete interior floor, mats, trunk/cargo vacuum',
+                    'Complete leather/upholstery seats vacuum and shampoo (including stain removal)',
+                    'Leather seats reconditioned with premium leather care',
+                    'Salt stain removal on carpets and floor mats',
+                    'Clean and shine all plastic, vinyl, console and cup holders'
+                ]
+            }
+        };
+
+        // Generate package cards
+        function generatePackageCards(packages) {
+            const container = document.getElementById('packages-container');
+            container.innerHTML = '';
+
+            // Move Platinum Package to the front
+            const platinumIndex = packages.findIndex(pkg => pkg.Package === 'Platinum Package');
+            if (platinumIndex > -1) {
+                const [platinum] = packages.splice(platinumIndex, 1);
+                packages.unshift(platinum);
+            }
+
+            packages.forEach((pkg, index) => {
+                const isFeatured = pkg.Package === 'Platinum Package';
+                const card = document.createElement('div');
+                card.className = `package-card ${isFeatured ? 'featured' : ''}`;
+                
+                let servicesHtml = '';
+                const services = serviceDescriptions[pkg.Package];
+                
+                if (typeof services === 'object' && !Array.isArray(services)) {
+                    // Platinum package with categorized services
+                    Object.keys(services).forEach(category => {
+                        servicesHtml += `<h4 class="services-title">${category}:</h4>`;
+                        services[category].forEach(service => {
+                            servicesHtml += `<div class="service-item">${service}</div>`;
+                        });
+                    });
+                } else if (Array.isArray(services)) {
+                    // Regular services list
+                    servicesHtml = '<h4 class="services-title">Services Included:</h4>';
+                    services.forEach(service => {
+                        servicesHtml += `<div class="service-item">${service}</div>`;
+                    });
+                }
+                
+                // Use duration for time slot
+                const calTime = getGoogleCalendarTime(pkg.Duration);
+
+                card.innerHTML = `
+                    ${isFeatured ? '<div class="featured-badge">Most Popular</div>' : ''}
+                    <div class="package-header">
+                        <h3 class="package-title">
+                            <a
+                                href="https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(pkg.Package + ' at Wrap Boss Auto Spa')}&location=1982+Dundas+St+Unit+3,+London,+ON+N5V+1P5&details=${encodeURIComponent('Book your ' + pkg.Package + ' service at Wrap Boss Auto Spa! Call (226) 224-0479 for questions.')}&dates=${calTime.start}/${calTime.end}"
+                                target="_blank"
+                                style="color: #667eea; text-decoration: underline; cursor: pointer;"
+                                title="Book this service on Google Calendar"
+                            >
+                                ${pkg.Package}
+                            </a>
+                        </h3>
+                        <p class="package-subtitle">${pkg.Type}</p>
+                        <div class="package-duration">${pkg.Duration}</div>
+                    </div>
+                    <div class="pricing-table">
+                        <div class="pricing-row">
+                            <span class="vehicle-type">Sedan</span>
+                            <span class="price">${pkg.Sedan}</span>
+                        </div>
+                        <div class="pricing-row">
+                            <span class="vehicle-type">Crossover</span>
+                            <span class="price">${pkg.Crossover}</span>
+                        </div>
+                        <div class="pricing-row">
+                            <span class="vehicle-type">Full Size SUV/Truck/Van</span>
+                            <span class="price">${pkg.Full_Size_SUV_Truck_Van}</span>
+                        </div>
+                    </div>
+                    <div class="services-list">
+                        ${servicesHtml}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Generate comparison table
+        function generateComparisonTable(packages) {
+            const tbody = document.querySelector('#comparison-table tbody');
+            tbody.innerHTML = '';
+            
+            packages.forEach(pkg => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${pkg.Package}</strong></td>
+                    <td>${pkg.Duration}</td>
+                    <td>${pkg.Sedan}</td>
+                    <td>${pkg.Crossover}</td>
+                    <td>${pkg.Full_Size_SUV_Truck_Van}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Generate tinting cards
+        function generateTintingCards(services) {
+            const container = document.getElementById('tinting-container');
+            container.innerHTML = '';
+            
+            services.forEach((service, index) => {
+                const card = document.createElement('div');
+                card.className = 'tinting-card';
+
+                // Google Calendar booking URLs for each film type
+                const baseLocation = "1982 Dundas St Unit 3, London, ON N5V 1P5";
+                const baseDetails = "Book your window tinting service at Wrap Boss Auto Spa! Call (226) 224-0479 for questions.";
+
+                const carbonUrl = `https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(service.Service + ' - Standard Carbon Film at Wrap Boss Auto Spa')}&location=${encodeURIComponent(baseLocation)}&details=${encodeURIComponent(baseDetails)}`;
+                const ceramicUrl = `https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(service.Service + ' - Ceramic/Nano Ceramic Film at Wrap Boss Auto Spa')}&location=${encodeURIComponent(baseLocation)}&details=${encodeURIComponent(baseDetails)}`;
+
+                card.innerHTML = `
+                    <div class="tinting-header">
+                        <h3 class="tinting-title">${service.Service}</h3>
+                    </div>
+                    <div class="film-options">
+                        <div class="film-option">
+                            <a
+                                href="${carbonUrl}"
+                                target="_blank"
+                                style="color: #667eea; text-decoration: underline; font-weight: 600;"
+                                title="Book Standard Carbon Film for ${service.Service} on Google Calendar"
+                            >
+                                <div class="film-type">Standard Carbon Film</div>
+                            </a>
+                            <div class="film-price">${service.Standard_Carbon_Film}</div>
+                        </div>
+                        <div class="film-option premium-film">
+                            <a
+                                href="${ceramicUrl}"
+                                target="_blank"
+                                style="color: #764ba2; text-decoration: underline; font-weight: 600;"
+                                title="Book Ceramic/Nano Ceramic Film for ${service.Service} on Google Calendar"
+                            >
+                                <div class="film-type">Ceramic/Nano Ceramic Film</div>
+                            </a>
+                            <div class="film-price">${service.Ceramic_Nano_Ceramic_Film}</div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Generate wrap service cards
+        function generateWrapCards(services) {
+            const container = document.getElementById('wrap-container');
+            container.innerHTML = '';
+            
+            services.forEach((service, index) => {
+                const isFeatured = service.Service === 'Full Vehicle Wrap';
+                const card = document.createElement('div');
+                card.className = `package-card ${isFeatured ? 'featured' : ''}`;
+                
+                // Define service descriptions for wrap services
+                const wrapDescriptions = {
+                    'Full Vehicle Wrap': [
+                        'Complete color change transformation',
+                        'Premium vinyl material (3M or Avery)',
+                        'Paint protection benefits',
+                        'Custom design consultation',
+                        'Professional installation',
+                        'Warranty on materials and workmanship',
+                        'Seamless finish with precise cuts'
+                    ],
+                    'Partial Wrap': [
+                        'Hood, roof, or accent areas',
+                        'High-quality vinyl application',
+                        'Custom color matching',
+                        'Professional edge sealing',
+                        'Surface preparation included'
+                    ],
+                    'Racing Stripes': [
+                        'Custom stripe design and placement',
+                        'Precision cut vinyl stripes',
+                        'Multiple color options',
+                        'Professional alignment',
+                        'Durable outdoor vinyl'
+                    ],
+                    'Chrome Delete': [
+                        'Blackout window trim and accents',
+                        'Matte or satin black finish',
+                        'Precise cutting and fitting',
+                        'Clean, modern appearance',
+                        'Removable without damage'
+                    ]
+                };
+                
+                let servicesHtml = '<h4 class="services-title">Services Included:</h4>';
+                const descriptions = wrapDescriptions[service.Service];
+                if (descriptions) {
+                    descriptions.forEach(desc => {
+                        servicesHtml += `<div class="service-item">${desc}</div>`;
+                    });
+                }
+                
+                // Use price range as duration fallback (if you have a duration field, use it instead)
+                // For this example, let's default to 3 hours for wraps
+                let durationStr = "3 Hours";
+                if (service.Duration) durationStr = service.Duration;
+                const calTime = getGoogleCalendarTime(durationStr);
+
+                card.innerHTML = `
+                    ${isFeatured ? '<div class="featured-badge">Most Popular</div>' : ''}
+                    <div class="package-header">
+                        <h3 class="package-title">
+                            <a
+                                href="https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(service.Service + ' at Wrap Boss Auto Spa')}&location=1982+Dundas+St+Unit+3,+London,+ON+N5V+1P5&details=${encodeURIComponent('Book your ' + service.Service + ' service at Wrap Boss Auto Spa! Call (226) 224-0479 for questions.')}&dates=${calTime.start}/${calTime.end}"
+                                target="_blank"
+                                style="color: #667eea; text-decoration: underline; cursor: pointer;"
+                                title="Book this service on Google Calendar"
+                            >
+                                ${service.Service}
+                            </a>
+                        </h3>
+                        <p class="package-subtitle">${service.Type}</p>
+                        <div class="package-duration">${service.Price_Range}</div>
+                    </div>
+                    <div class="services-list">
+                        ${servicesHtml}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Update the Google Calendar link generation for Detailing and Wrap packages to use the package duration as the event duration.
+
+function getGoogleCalendarTime(durationStr) {
+    // Example durationStr: "3.5 Hours", "6 Hours", "6.5 Hours"
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 0, 0); // Default: today at 10:00 AM
+    let hours = 1;
+    let minutes = 0;
+    if (durationStr) {
+        const match = durationStr.match(/([\d.]+)\s*Hour/);
+        if (match) {
+            hours = Math.floor(Number(match[1]));
+            minutes = Math.round((Number(match[1]) - hours) * 60);
+        }
+    }
+    const end = new Date(start.getTime() + hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+    // Format: YYYYMMDDTHHMMSSZ (UTC)
+    function toCal(dt) {
+        return dt.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+    }
+    return {
+        start: toCal(start),
+        end: toCal(end)
+    };
+}
+
+// Show service function
+function showService(serviceType) {
+    const detailingSection = document.getElementById('detailing-section');
+    const tintingSection = document.getElementById('tinting-section');
+    const wrapSection = document.getElementById('wrap-section');
+    const navButtons = document.querySelectorAll('.nav-btn');
+    
+    // Hide all sections
+    detailingSection.style.display = 'none';
+    tintingSection.style.display = 'none';
+    wrapSection.style.display = 'none';
+    
+    // Remove active class from all buttons
+    navButtons.forEach(btn => btn.classList.remove('active'));
+    
+    if (serviceType === 'detailing') {
+        detailingSection.style.display = 'block';
+        navButtons[0].classList.add('active');
+    } else if (serviceType === 'tinting') {
+        tintingSection.style.display = 'block';
+        navButtons[1].classList.add('active');
+    } else if (serviceType === 'wrap') {
+        wrapSection.style.display = 'block';
+        navButtons[2].classList.add('active');
+    }
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    // Parse all data sources
+    const packages = parseDetailingData();
+    const tintingServices = parseTintingData();
+    const wrapServices = parseWrapData(); // <-- FIX: Added this line
+    
+    // Generate all content
+    generatePackageCards(packages);
+    generateComparisonTable(packages);
+    generateTintingCards(tintingServices);
+    generateWrapCards(wrapServices); // <-- FIX: Added this line
+});
+    </script>
+</body>
+</html>
